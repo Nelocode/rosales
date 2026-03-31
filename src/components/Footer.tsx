@@ -82,7 +82,7 @@ export function Footer() {
                <p className="text-lg font-semibold text-white">Recognized Excellence</p>
             </div>
             <div className="flex items-center gap-12 md:gap-20">
-              <div className="relative h-20 w-44 transition-all duration-300 hover:brightness-110">
+              <div className="relative h-28 w-60 transition-all duration-300 hover:brightness-110">
                 <Image
                   src="/images/footer/Guide-photo-placeholder-200x200-0908(1).png"
                   alt="Guide to Gwinnett"
@@ -91,6 +91,7 @@ export function Footer() {
                 />
               </div>
               <div className="relative h-28 w-28 transition-all duration-300 hover:scale-110">
+
                 <Image
                   src="/images/footer/callomeni_nomine.png"
                   alt="Best of Gwinnett Nominee"
