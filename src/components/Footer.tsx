@@ -19,26 +19,6 @@ export function Footer() {
             <p className="text-sm text-slate-400">
               {t.footer.description}
             </p>
-            
-            {/* Added Images */}
-            <div className="pt-4 flex items-center gap-4">
-              <div className="relative h-12 w-24">
-                <Image
-                  src="/images/footer/Guide-photo-placeholder-200x200-0908(1).png"
-                  alt="Guide to Gwinnett"
-                  fill
-                  className="object-contain"
-                />
-              </div>
-              <div className="relative h-12 w-12">
-                <Image
-                  src="/images/footer/callomeni_nomine.png"
-                  alt="Nominee"
-                  fill
-                  className="object-contain"
-                />
-              </div>
-            </div>
           </div>
 
           {/* Quick Links */}
@@ -93,13 +73,39 @@ export function Footer() {
             </div>
           </div>
         </div>
+
+        {/* Trusted & Recognized Section - More Relevant */}
+        <div className="mt-16 pt-10 border-t border-slate-800/50">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-12 md:gap-24">
+            <div className="text-center md:text-left">
+               <p className="text-xs font-bold text-amber-500 uppercase tracking-[0.2em] mb-1">Authenticity & Quality</p>
+               <p className="text-lg font-semibold text-white">Recognized Excellence</p>
+            </div>
+            <div className="flex items-center gap-12 md:gap-20">
+              <div className="relative h-20 w-44 transition-all duration-300 hover:brightness-110">
+                <Image
+                  src="/images/footer/Guide-photo-placeholder-200x200-0908(1).png"
+                  alt="Guide to Gwinnett"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <div className="relative h-28 w-28 transition-all duration-300 hover:scale-110">
+                <Image
+                  src="/images/footer/callomeni_nomine.png"
+                  alt="Best of Gwinnett Nominee"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
         
-        <div className="border-t border-slate-800 mt-12 pt-8 text-center text-xs text-slate-500">
+        <div className="mt-16 pt-8 border-t border-slate-800/30 text-center text-xs text-slate-500">
           <p>&copy; {currentYear} Rosales Insurance Agency. {t.footer.rights}</p>
         </div>
       </div>
     </footer>
   );
 }
-
-
