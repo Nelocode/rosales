@@ -9,6 +9,14 @@ const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
 export const metadata: Metadata = {
   title: "Rosales Insurance Agency",
   description: "Trusted Insurance Services in Georgia - Auto, Home, Business",
+  keywords: ["insurance", "Georgia", "auto insurance", "home insurance", "business insurance", "Rosales"],
+  openGraph: {
+    title: "Rosales Insurance Agency",
+    description: "Trusted Insurance Services in Georgia - Auto, Home, Business",
+    type: "website",
+    locale: "en_US",
+    siteName: "Rosales Insurance",
+  },
 };
 
 export default function RootLayout({

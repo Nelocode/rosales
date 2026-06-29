@@ -40,8 +40,8 @@ export function Footer() {
               <li className="flex items-start gap-2">
                 <MapPin className="h-4 w-4 text-amber-500 mt-1 shrink-0" />
                 <span>
-                 123 Main St, Suite 100<br />
-                 Atlanta, GA 30303
+                 810 BEAVER RUIN RD NW STE B109<br />
+                 LILBURN, GA 30047
                 </span>
               </li>
               <li className="flex items-center gap-2">

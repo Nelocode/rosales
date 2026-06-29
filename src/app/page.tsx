@@ -7,6 +7,8 @@ import { Services } from "@/components/Services";
 import { TrustSignals } from "@/components/TrustSignals";
 import { ContactSection } from "@/components/ContactSection";
 import { ClaimsSection } from "@/components/ClaimsSection";
+import { OfficeGallery } from "@/components/OfficeGallery";
+import { WhatsAppForm } from "@/components/WhatsAppForm";
 import { ScrollToTop } from "@/components/ScrollToTop";
 
 export default function Home() {
@@ -17,6 +19,8 @@ export default function Home() {
       <Services />
       <TrustSignals />
       <ClaimsSection />
+      <WhatsAppForm />
+      <OfficeGallery />
       <ContactSection />
       <Footer />
       <ScrollToTop />

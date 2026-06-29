@@ -39,7 +39,7 @@ export function ContactSection() {
                             </div>
                             <div>
                                 <p className="font-semibold text-white">Visit Us</p>
-                                <p className="text-slate-400">123 Main St, Suite 100<br/>Atlanta, GA 30303</p>
+                                <p className="text-slate-400">810 BEAVER RUIN RD NW STE B109<br/>LILBURN, GA 30047</p>
                             </div>
                         </li>
                         <li className="flex items-start gap-4">
