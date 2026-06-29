@@ -19,8 +19,8 @@ export default function Home() {
       <Services />
       <TrustSignals />
       <ClaimsSection />
-      <WhatsAppForm />
       <OfficeGallery />
+      <WhatsAppForm />
       <ContactSection />
       <Footer />
       <ScrollToTop />

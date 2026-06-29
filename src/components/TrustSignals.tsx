@@ -22,7 +22,7 @@ export function TrustSignals() {
           >
             <div className="relative h-[400px] md:h-[500px] w-full rounded-2xl overflow-hidden shadow-2xl">
               <Image
-                src="/images/Ourteam.jpg"
+                src="/images/billboard.jpg"
                 alt="Rosales Insurance Team"
                 fill
                 className="object-cover"
