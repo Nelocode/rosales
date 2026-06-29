@@ -4,9 +4,10 @@ FROM node:20-alpine AS base
 FROM base AS deps
 RUN apk add --no-cache libc6-compat python3 make g++
 WORKDIR /app
-
+# Install dependencies based on the preferred package manager
 COPY package.json package-lock.json* ./
-RUN npm ci
+# Use npm install instead of npm ci to handle cross-platform lockfile differences
+RUN npm install --no-audit --no-fund
 
 # Rebuild the source code only when needed
 FROM base AS builder
