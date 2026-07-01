@@ -114,6 +114,7 @@ export const dictionary = {
       office_hours: "Office Hours",
       mon_fri: "Mon - Fri",
       sat: "Sat",
+      sun: "Sun",
       rights: "All rights reserved."
     }
   },
@@ -230,6 +231,7 @@ export const dictionary = {
       office_hours: "Horario de Oficina",
       mon_fri: "Lun - Vie",
       sat: "Sáb",
+      sun: "Dom",
       rights: "Todos los derechos reservados."
     }
   },
