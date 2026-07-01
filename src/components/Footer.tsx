@@ -59,10 +59,10 @@ export function Footer() {
            <div>
             <h4 className="text-lg font-semibold text-white mb-4">{t.footer.follow_us}</h4>
             <div className="flex gap-4">
-              <a href="#" className="p-2 bg-slate-800 rounded-full hover:bg-amber-600 transition-colors">
+              <a href="https://www.facebook.com/share/1EHHLeJrMV/" target="_blank" rel="noopener noreferrer" className="p-2 bg-slate-800 rounded-full hover:bg-amber-600 transition-colors">
                 <Facebook className="h-5 w-5" />
               </a>
-               <a href="#" className="p-2 bg-slate-800 rounded-full hover:bg-amber-600 transition-colors">
+               <a href="https://www.instagram.com/rosalesinsuranceusa/" target="_blank" rel="noopener noreferrer" className="p-2 bg-slate-800 rounded-full hover:bg-amber-600 transition-colors">
                 <Instagram className="h-5 w-5" />
               </a>
             </div>
