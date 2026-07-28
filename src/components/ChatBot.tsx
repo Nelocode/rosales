@@ -4,11 +4,12 @@ import { useState, useEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "./ui/button";
-import { Send, User, Bot, Check } from "lucide-react";
+import { Send, User, Bot, Check, ShieldCheck } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { chatFlow, Question } from "@/lib/chatbot-flow";
 import clsx from "clsx";
 import emailjs from '@emailjs/browser';
+import { CaptchaWidget } from "./CaptchaWidget";
 
 type Message = {
     sender: "bot" | "user";
@@ -22,6 +23,9 @@ export function ChatBot() {
     const [currentQuestionId, setCurrentQuestionId] = useState<string>("start");
     const [inputValue, setInputValue] = useState("");
     const [formData, setFormData] = useState<Record<string, string>>({});
+    const [isCaptchaValid, setIsCaptchaValid] = useState(false);
+    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [isSending, setIsSending] = useState(false);
     const chatContainerRef = useRef<HTMLDivElement>(null);
 
     const currentQuestion = chatFlow.find(q => q.id === currentQuestionId);
@@ -30,14 +34,13 @@ export function ChatBot() {
     useEffect(() => {
         const startNode = chatFlow.find(q => q.id === "start");
         if (startNode) {
-            // If no messages, or if we are at the start and language changed (update the greeting)
             if (messages.length === 0) {
                 setMessages([{ sender: "bot", text: startNode.text[lang] }]);
             } else if (messages.length === 1 && messages[0].sender === "bot" && currentQuestionId === "start") {
                  setMessages([{ sender: "bot", text: startNode.text[lang] }]);
             }
         }
-    }, [lang, currentQuestionId]); // Removed messages.length to avoid loops, explicit logic handles it
+    }, [lang, currentQuestionId]);
 
     // Better Scroll Logic (Contained)
     useEffect(() => {
@@ -58,11 +61,11 @@ export function ChatBot() {
 
     // E-mail Sending Logic
     const sendEmail = (data: Record<string, string>, currentMessages: Message[]) => {
-        // Format transcript
+        setIsSending(true);
         const transcript = currentMessages.map(m => `[${m.sender.toUpperCase()}]: ${m.text}`).join('\n\n');
         
         const templateParams = {
-            to_email: "nelsondcarvajal@gmail.com", // Recipient
+            to_email: "nelsondcarvajal@gmail.com",
             from_name: "Rosales Assistant",
             user_name: data['start'] || data['firstName'] || "Usuario",
             user_email: data['email'] || "N/A",
@@ -71,8 +74,6 @@ export function ChatBot() {
             ...data
         };
 
-        // NOTE: Replace these with your actual EmailJS Service/Template/Public Key
-        // Sign up at https://www.emailjs.com/ to get them.
         const SERVICE_ID = 'service_050zthq'; 
         const TEMPLATE_ID = 'template_h1jluks'; 
         const PUBLIC_KEY = 'XPxvngYElA1lEpJQ7';
@@ -80,30 +81,37 @@ export function ChatBot() {
         emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY)
             .then((response) => {
                 console.log('SUCCESS!', response.status, response.text);
-                 setMessages(prev => [...prev, { 
+                setIsSending(false);
+                setIsSubmitted(true);
+                setMessages(prev => [...prev, { 
                      sender: "bot", 
                      text: lang === "en" 
                         ? "Great! We've received your info and sent a copy to our team." 
                         : "¡Excelente! Hemos recibido tu información y enviado una copia a nuestro equipo."
-                 }]);
+                }]);
             }, (err) => {
                 console.log('FAILED...', err);
-                 setMessages(prev => [...prev, { 
+                setIsSending(false);
+                setIsSubmitted(true);
+                setMessages(prev => [...prev, { 
                      sender: "bot", 
                      text: lang === "en" 
-                        ? "Oops! We couldn't send the email automatically. Please call us at 678-373-1310."
-                        : "¡Ups! No pudimos enviar el correo automáticamente. Por favor llámanos al 678-373-1310."
-                 }]);
+                        ? "Oops! We couldn't send the email automatically. Please call us at 678-860-2265."
+                        : "¡Ups! No pudimos enviar el correo automáticamente. Por favor llámanos al 678-860-2265."
+                }]);
             });
     };
 
+    const handleFinalSubmit = () => {
+        if (!isCaptchaValid || isSending || isSubmitted) return;
+        sendEmail(formData, messages);
+    };
+
     const handleAnswer = (answer: string, valueToStore?: string) => {
-        // 1. Add User Message
         const userMsg: Message = { sender: "user", text: answer };
         const updatedMessages = [...messages, userMsg];
         setMessages(updatedMessages);
 
-        // SPECIAL LOGIC: Check for greeting at 'start'
         if (currentQuestionId === "start" && isGreeting(answer)) {
             const isSpanish = answer.toLowerCase().includes("hola") || answer.toLowerCase().includes("buenos");
             
@@ -118,11 +126,9 @@ export function ChatBot() {
             return;
         }
 
-        // 2. Store Data
         const updatedFormData = { ...formData, [currentQuestionId]: valueToStore || answer };
         setFormData(updatedFormData);
 
-        // 3. Find Next Question
         if (currentQuestion?.next) {
             const nextQ = chatFlow.find(q => q.id === currentQuestion.next);
             if (nextQ) {
@@ -131,15 +137,6 @@ export function ChatBot() {
                     setCurrentQuestionId(nextQ.id);
                 }, 600);
             }
-        } else if (currentQuestion?.type === "end") {
-            // Initiate Email Send
-            setTimeout(() => {
-                 setMessages(prev => [...prev, { 
-                     sender: "bot", 
-                     text: lang === "en" ? "Sending your details..." : "Enviando tus detalles..." 
-                 }]);
-                 sendEmail(updatedFormData, updatedMessages);
-            }, 1000);
         }
     };
 
@@ -207,11 +204,33 @@ export function ChatBot() {
                         ))}
                     </div>
                 ) : currentQuestion.type === "end" ? (
-                    <div className="text-center text-primary font-bold p-4 flex flex-col items-center">
-                        <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mb-2">
-                            <Check className="w-6 h-6 text-green-600" />
-                        </div>
-                        {lang === "en" ? "Thank you! We'll be in touch." : "¡Gracias! Estaremos en contacto."}
+                    <div className="space-y-3">
+                        {isSubmitted ? (
+                            <div className="text-center text-primary font-bold p-3 flex flex-col items-center">
+                                <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mb-2">
+                                    <Check className="w-5 h-5 text-green-600" />
+                                </div>
+                                {lang === "en" ? "Thank you! We'll be in touch." : "¡Gracias! Estaremos en contacto."}
+                            </div>
+                        ) : (
+                            <div className="space-y-3">
+                                <CaptchaWidget onVerify={setIsCaptchaValid} />
+                                <button
+                                    onClick={handleFinalSubmit}
+                                    disabled={!isCaptchaValid || isSending}
+                                    className={`w-full py-3 px-4 rounded-xl font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 ${
+                                        isCaptchaValid && !isSending
+                                            ? "bg-primary hover:bg-primary/90 text-white cursor-pointer"
+                                            : "bg-slate-200 text-slate-400 cursor-not-allowed"
+                                    }`}
+                                >
+                                    <ShieldCheck className="w-4 h-4" />
+                                    {isSending 
+                                        ? (lang === "en" ? "Sending..." : "Enviando...") 
+                                        : (lang === "en" ? "Complete & Send Quote Request" : "Completar y Enviar Cotización")}
+                                </button>
+                            </div>
+                        )}
                     </div>
                 ) : (
                     <form onSubmit={handleInputSubmit} className="flex gap-2">

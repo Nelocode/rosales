@@ -4,17 +4,20 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { MessageCircle, Send } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
+import { CaptchaWidget } from "./CaptchaWidget";
 
-const WHATSAPP_NUMBER = "16787607743"; // +1 (678) 760-7743
+const WHATSAPP_NUMBER = "16788602265"; // +1 678-860-2265
 
 export function WhatsAppForm() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const [service, setService] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [isCaptchaValid, setIsCaptchaValid] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!isCaptchaValid) return;
 
     const message = encodeURIComponent(
       `*New Quote Request - Rosales Insurance*\n\n` +
@@ -107,14 +110,22 @@ export function WhatsAppForm() {
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 required
-                placeholder="(678) 760-7743"
+                placeholder="(678) 860-2265"
                 className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-slate-900"
               />
             </div>
 
+            {/* Anti-Spam CAPTCHA */}
+            <CaptchaWidget onVerify={setIsCaptchaValid} />
+
             <button
               type="submit"
-              className="w-full bg-green-600 hover:bg-green-700 text-white font-bold text-lg py-4 rounded-xl shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-3"
+              disabled={!isCaptchaValid}
+              className={`w-full font-bold text-lg py-4 rounded-xl shadow-lg transition-all flex items-center justify-center gap-3 ${
+                isCaptchaValid
+                  ? "bg-green-600 hover:bg-green-700 text-white cursor-pointer hover:shadow-xl"
+                  : "bg-slate-300 text-slate-500 cursor-not-allowed opacity-75"
+              }`}
             >
               <MessageCircle className="w-6 h-6" />
               Send via WhatsApp

@@ -10,6 +10,7 @@ import { ClaimsSection } from "@/components/ClaimsSection";
 import { OfficeGallery } from "@/components/OfficeGallery";
 import { WhatsAppForm } from "@/components/WhatsAppForm";
 import { ScrollToTop } from "@/components/ScrollToTop";
+import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
 
 export default function Home() {
   return (
@@ -24,6 +25,7 @@ export default function Home() {
       <ContactSection />
       <Footer />
       <ScrollToTop />
+      <FloatingWhatsApp />
     </main>
   );
 }
