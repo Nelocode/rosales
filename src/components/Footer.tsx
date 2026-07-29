@@ -39,14 +39,22 @@ export function Footer() {
             <ul className="space-y-3 text-sm">
               <li className="flex items-start gap-2">
                 <MapPin className="h-4 w-4 text-amber-500 mt-1 shrink-0" />
-                <span>
-                 810 BEAVER RUIN RD NW STE B109<br />
-                 LILBURN, GA 30047
-                </span>
+                <div className="space-y-2 text-xs">
+                  <div>
+                    <span className="font-bold text-amber-500">Lawrenceville:</span><br />
+                    1685 Old Norcross Rd<br />
+                    Lawrenceville, GA 30046
+                  </div>
+                  <div>
+                    <span className="font-bold text-amber-500">Lilburn:</span><br />
+                    810 Beaver Ruin Rd Ste B109<br />
+                    Lilburn, GA 30047
+                  </div>
+                </div>
               </li>
               <li className="flex items-center gap-2">
                 <Phone className="h-4 w-4 text-amber-500" />
-                <a href="tel:678-373-1310" className="hover:text-white">678-373-1310</a>
+                <a href="tel:678-860-2265" className="hover:text-white">678-860-2265</a>
               </li>
                <li className="flex items-center gap-2">
                 <Mail className="h-4 w-4 text-amber-500" />
@@ -75,7 +83,7 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Trusted & Recognized Section - More Relevant */}
+        {/* Trusted & Recognized Section */}
         <div className="mt-16 pt-10 border-t border-slate-800/50">
           <div className="flex flex-col md:flex-row items-center justify-center gap-12 md:gap-24">
             <div className="text-center md:text-left">

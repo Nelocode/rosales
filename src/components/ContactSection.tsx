@@ -38,8 +38,17 @@ export function ContactSection() {
                                 <MapPin className="w-6 h-6 text-amber-500" />
                             </div>
                             <div>
-                                <p className="font-semibold text-white">Visit Us</p>
-                                <p className="text-slate-400">810 BEAVER RUIN RD NW STE B109<br/>LILBURN, GA 30047</p>
+                                <p className="font-semibold text-white mb-1">Visit Our Offices</p>
+                                <div className="space-y-3 text-slate-300 text-sm">
+                                    <div>
+                                        <p className="font-bold text-amber-500">Lawrenceville Location:</p>
+                                        <p className="text-slate-400">1685 Old Norcross Rd<br/>Lawrenceville, GA 30046</p>
+                                    </div>
+                                    <div>
+                                        <p className="font-bold text-amber-500">Lilburn Location:</p>
+                                        <p className="text-slate-400">810 Beaver Ruin Rd Ste B109<br/>Lilburn, GA 30047</p>
+                                    </div>
+                                </div>
                             </div>
                         </li>
                         <li className="flex items-start gap-4">
@@ -48,7 +57,7 @@ export function ContactSection() {
                             </div>
                             <div>
                                 <p className="font-semibold text-white">Call Us</p>
-                                <a href="tel:678-373-1310" className="text-slate-400 hover:text-amber-500 transition-colors">678-373-1310</a>
+                                <a href="tel:678-860-2265" className="text-slate-400 hover:text-amber-500 transition-colors">678-860-2265</a>
                             </div>
                         </li>
                         <li className="flex items-start gap-4">
